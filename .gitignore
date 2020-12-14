@@ -1,0 +1,17 @@
+*~ 
+*.tmp 
+*.pdf 
+*.png 
+*.tif 
+*.pyc
+.*
+!.gitignore
+
+*/.DS_Store
+groupwork
+.Rhistory 
+*/.*
+*/Results/*
+!*/Results/.gitkeep
+
+__pycache__/
