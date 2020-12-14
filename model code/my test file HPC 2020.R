@@ -1,7 +1,7 @@
 # CMEE 2020 HPC excercises R code HPC run code proforma
 
 rm(list=ls()) # good practice in this instance
-source("tang_HPC_2020_main.R")
+source("acaciatang_HPC_2020_main.R")
 # it should take a faction of a second to source your file
 # if it takes longer you're using the main file to do actual simulations
 # it should be used only for defining functions that will be useful for your cluster run and which will be marked automatically
@@ -27,18 +27,18 @@ output_file_name = "my_test_file.rda"
 #put files
 sftp tst116@login.cx1.hpc.ic.ac.uk
 #[enter imperial password]
-put tang_HPC_2020_main.R
-put tang_HPC_2020_cluster.R
+put acaciatang_HPC_2020_main.R
+put acaciatang_HPC_2020_cluster.R
 put clusterRun.sh
 exit
 
 #set up
 Ssh -l tst116 login.cx1.hpc.ic.ac.uk
 #[enter imperial password]
-#mkdir tang_HPC_2020
-#mv tang_HPC_2020_cluster.R $HOME/tang_HPC_2020
-#cd tang_HPC_2020
-#cat tang_HPC_2020_cluster.R
+#mkdir acaciatang_HPC_2020
+#mv acaciatang_HPC_2020_cluster.R $HOME/acaciatang_HPC_2020
+#cd acaciatang_HPC_2020
+#cat acaciatang_HPC_2020_cluster.R
 #module load anaconda3/personal
 #anaconda-setup
 #conda install r
@@ -47,13 +47,18 @@ Ssh -l tst116 login.cx1.hpc.ic.ac.uk
 qsub -J 1-100 clusterRun.sh
 
 #get files
+cd acaciatang_HPC_2020
 tar czvf Simulation.tgz *
+mv clusterRun.sh.e* error
+cd error
 tar czvf Error.tgz *
+mv clusterRun.sh.o* output
+cd output
 tar czvf Output.tgz *
 
 sftp tst116@login.cx1.hpc.ic.ac.uk
 #[enter imperial password]
-get tang_HPC_2020/Simulation.tgz
+get acaciatang_HPC_2020/Simulation.tgz
 get error/Error.tgz
 get output/Output.tgz
 exit
