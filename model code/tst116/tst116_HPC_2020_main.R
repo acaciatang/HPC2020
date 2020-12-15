@@ -4,7 +4,7 @@
 name <- "Tsz So Acacia Tang"
 preferred_name <- "Acacia"
 email <- "tst116@ic.ac.uk"
-username <- "acaciatang"
+username <- "tst116"
 
 # please remember *not* to clear the workspace here, or anywhere in this file. If you do, it'll wipe out your username information that you entered just above, and when you use this file as a 'toolbox' as intended it'll also wipe away everything you're doing outside of the toolbox.  For example, it would wipe away any automarking code that may be running and that would be annoying!
 
@@ -248,7 +248,7 @@ plot_cluster_results <- function()  {
     load("CombinedResults.rda")
     oct <- c("1", "2-3", "4-7", "8-15", "16-31", "32-63", "64-127", "128-255", "256-511", "512-1023", "1024-2047", "2048-4095")
     # plot the graphs
-    par(mfrow=c(4,1))
+    par(mfrow=c(2,2))
     barplot(
     combined_results[[1]][[1]],
     main = "Average Species Abundance Distribution (Population Size = 500)",

@@ -1,5 +1,5 @@
 # please only change your username to generate the speciation rate personal to you
-username <- "acaciatang"
+username <- "tst116"
 
 # generates a seed based on student username and year
 # the seed will be between min and max and have sigfig significant figures
