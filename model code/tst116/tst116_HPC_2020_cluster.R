@@ -7,7 +7,7 @@ source("/rds/general/user/tst116/home/tst116_HPC_2020_main.R") # source file, fo
 #source("tst116_HPC_2020_main.R") # source file, for PC
 SIZE <- c(500, 1000, 2500, 5000) # set community sizes
 iter <- as.numeric(Sys.getenv("PBS_ARRAY_INDEX")) # for HPC
-#for (iter in 5:8){ # for running on PC
+#for (iter in 1:100){ # for running on PC
     set.seed(iter) # set seed
     s <- SIZE[iter%%4 + 1] # select community size
     name <- paste("Simulation", iter, ".rda", sep = "") # name for output file

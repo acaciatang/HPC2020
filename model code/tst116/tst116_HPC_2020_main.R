@@ -259,30 +259,58 @@ process_cluster_results <- function()  { # takes in .rda files from simulation a
   save(combined_results, file = "CombinedResults.rda") # save octave outputs to file
 }
 
+
 plot_cluster_results <- function()  { # plots mean species abundance distribution for each community size
+    # clear any existing graphs and plot your graph within the R window
+    graphics.off()
     # load combined_results from your rda file
     load("CombinedResults.rda") # load processed data for plotting
     oct <- c("1", "2-3", "4-7", "8-15", "16-31", "32-63", "64-127", "128-255", "256-511", "512-1023", "1024-2047", "2048-4095") # all possible octaves
     # plot the graphs
-    combined_results <- lapply(1:4, function(i) c(combined_results[[i]], rep(0, length(combined_results[[4]]) - length(combined_results[[i]]) )))
-    ToPlot <- matrix(unlist(combined_results), nrow = 4, ncol = length(combined_results[[4]]), byrow = T)
-    rownames(ToPlot) <- c("500", "1000", "2500", "5000")
-    # clear any existing graphs and plot your graph within the R window
-    graphics.off()
-    barplot(
-      ToPlot, # data is automatically grouped by row
-      beside = TRUE, # makes grouped bar plot instead of stacked
-      col = c(1, 2, 3, 4), # colour bars
-      main = "Average Species Abundance Distribution", # title
-      xlab = "Octaves", # x-axis label
-      ylab = "Frequency", # y-axis label
-      ylim= c(0,12), # make y-axis longer than data frequency
-      names.arg = oct[1:length(combined_results[[4]])], # select appropriate labels for bars
-      cex.names=0.4, # adjust font size so all labels are shown
-      legend = rownames(ToPlot), # add legend
-      args.legend=list(title="Community Size", horiz = T) # add title to legend and make legend horizontal
+    par(mfrow=c(2,2)) # make a 2*2 subplot
+    barplot( # make a bar plot
+    combined_results[[1]], # results for simulation using community size = 500
+    main = "Average Species Abundance Distribution (Population Size = 500)", # title
+    xlab = "Octaves", # x-axis label
+    ylab = "Frequency", # y-axis label
+    names.arg = oct[1:length(combined_results[[1]])], # select appropriate labels for bars
+    cex.names=0.4, # adjust font size so all labels are shown
+    cex.main=0.7,
+    ylim = c(0, 1.5) # make y-axis cover all y-values
     )
     
+    barplot( # make a bar plot
+    combined_results[[2]], # results for simulation using community size = 1000
+    main = "Average Species Abundance Distribution (Population Size = 1000)", # title
+    xlab = "Octaves", # x-axis label
+    ylab = "Frequency", # y-axis label
+    names.arg = oct[1:length(combined_results[[2]])], # select appropriate labels for bars
+    cex.names=0.3, # adjust font size so all labels are shown
+    cex.main=0.7,
+    ylim = c(0, 2.5) # make y-axis cover all y-values
+    )
+    
+    barplot( # make a bar plot
+    combined_results[[3]], # results for simulation using community size = 2500
+    main = "Average Species Abundance Distribution (Population Size = 2500)", # title
+    xlab = "Octaves", # x-axis label
+    ylab = "Frequency", # y-axis label
+    names.arg = oct[1:length(combined_results[[3]])], # select appropriate labels for bars
+    cex.names=0.2, # adjust font size so all labels are shown
+    cex.main=0.7,
+    ylim = c(0, ceiling(max(combined_results[[3]]))) # make y-axis cover all y-values
+    )
+
+    barplot( # make a bar plot
+    combined_results[[4]], # results for simulation using community size = 5000
+    main = "Average Species Abundance Distribution (Population Size = 5000)", # title
+    xlab = "Octaves", # x-axis label
+    ylab = "Frequency", # y-axis label
+    names.arg = oct[1:length(combined_results[[4]])], # select appropriate labels for bars
+    cex.names=0.2, # adjust font size so all labels are shown
+    cex.main=0.7,
+    ylim = c(0, ceiling(max(combined_results[[4]]+1))) # make y-axis cover all y-values
+    )
     return(combined_results) # return plotted data
 }
 
@@ -581,25 +609,53 @@ Challenge_D <- function() {
   combined_results <- lapply(results, function(i) i/25) # take average 
   
   # clear any existing graphs and plot your graph within the R window
-  combined_results <- lapply(1:4, function(i) c(combined_results[[i]], rep(0, length(combined_results[[4]]) - length(combined_results[[i]]) )))
-  ToPlot <- matrix(unlist(combined_results), nrow = 4, ncol = length(combined_results[[4]]), byrow = T)
-  rownames(ToPlot) <- c("500", "1000", "2500", "5000")
+  graphics.off() # clear exiting graphs
   oct <- c("1", "2-3", "4-7", "8-15", "16-31", "32-63", "64-127", "128-255", "256-511", "512-1023", "1024-2047", "2048-4095") # all possible octaves
-  graphics.off()
-    barplot(
-      ToPlot, # data is automatically grouped by row
-      beside = TRUE, # makes grouped bar plot instead of stacked
-      col = c(1, 2, 3, 4), # colour bars
-      main = "Average Species Abundance Distribution", # title
-      xlab = "Octaves", # x-axis label
-      ylab = "Frequency", # y-axis label
-      ylim= c(0,12), # make y-axis longer than data frequency
-      names.arg = oct[1:length(combined_results[[4]])], # select appropriate labels for bars
-      cex.names=0.4, # adjust font size so all labels are shown
-      legend = rownames(ToPlot), # add legend
-      args.legend=list(title="Community Size", horiz = T) # add title to legend and make legend horizontal
+    # plot the graphs
+    par(mfrow=c(2,2)) # make a 2*2 subplot
+    barplot( # make a bar plot
+    combined_results[[1]], # results for simulation using community size = 500
+    main = "Average Species Abundance Distribution (Population Size = 500)", # title
+    xlab = "Octaves", # x-axis label
+    ylab = "Frequency", # y-axis label
+    names.arg = oct[1:length(combined_results[[1]])], # select appropriate labels for bars
+    cex.names=0.4, # adjust font size so all labels are shown
+    cex.main=0.7,
+    ylim = c(0, ceiling(max(combined_results[[1]]))) # make y-axis cover all y-values
+    )
+    
+    barplot( # make a bar plot
+    combined_results[[2]], # results for simulation using community size = 1000
+    main = "Average Species Abundance Distribution (Population Size = 1000)", # title
+    xlab = "Octaves", # x-axis label
+    ylab = "Frequency", # y-axis label
+    names.arg = oct[1:length(combined_results[[2]])], # select appropriate labels for bars
+    cex.names=0.3, # adjust font size so all labels are shown
+    cex.main=0.7,
+    ylim = c(0, ceiling(max(combined_results[[2]]))) # make y-axis cover all y-values
+    )
+    
+    barplot( # make a bar plot
+    combined_results[[3]], # results for simulation using community size = 2500
+    main = "Average Species Abundance Distribution (Population Size = 2500)", # title
+    xlab = "Octaves", # x-axis label
+    ylab = "Frequency", # y-axis label
+    names.arg = oct[1:length(combined_results[[3]])], # select appropriate labels for bars
+    cex.names=0.2, # adjust font size so all labels are shown
+    cex.main=0.7,
+    ylim = c(0, ceiling(max(combined_results[[3]]))) # make y-axis cover all y-values
     )
 
+    barplot( # make a bar plot
+    combined_results[[4]], # results for simulation using community size = 5000
+    main = "Average Species Abundance Distribution (Population Size = 5000)", # title
+    xlab = "Octaves", # x-axis label
+    ylab = "Frequency", # y-axis label
+    names.arg = oct[1:length(combined_results[[4]])], # select appropriate labels for bars
+    cex.names=0.2, # adjust font size so all labels are shown
+    cex.main=0.7,
+    ylim = c(0, ceiling(max(combined_results[[4]]))) # make y-axis cover all y-values
+    )
   answer <- "The coalescence model is more stochastic since it does not average out the species abundance for a community over generations. This is why the results are different from that of the cluster run. If more simulations are run, the graph will come to resemble more closely that from the cluster run. However, coalescence is faster because it only follows the ancestry of the individuals found in the stable community, where sharing ancestry implies individuals are of the same species. Many lineages/species are lost in the history of the communtiy, and by ignoring the ones that have gone exitinct, less simulations need to be carried out. Also, coalescence does not require a burn-in period."
   return(paste("The coalescence simulation took ", timer, " seconds to run 100 simulations in sequence. ", answer, sep = "" ))
 }
