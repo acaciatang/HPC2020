@@ -338,7 +338,6 @@ turtle <- function(start_position, direction, length)  { # draws a line of speci
 elbow <- function(start_position, direction, length)  {
   start <- turtle(start_position, direction, length) # plot first line as specified
   turtle(start, direction - pi/4, length*0.95) # make second line pi/4 to the right and 5% shorter
-  return(c(x2, y2)) # you should return your endpoint here.
 }
 
 # Question 26
@@ -572,14 +571,14 @@ coalescence_run <- function(J=100, v=0.1){ # coalescence simulation, returns abu
 Challenge_D <- function() {
   SIZE <- c(500, 1000, 2500, 5000) # set community sizes
   results <- vector("list", 4)
-  start <- proc.time()[3]
+  start <- proc.time()[3] # times simulation
   for (iter in 1:100){
     set.seed(iter) # set seed
     size <- SIZE[iter%%4 + 1] # select community size
-    results[[iter%%4 + 1]] <- sum_vect(results[[iter%%4 + 1]], octaves(coalescence_run(size, 0.0021565)))
+    results[[iter%%4 + 1]] <- sum_vect(results[[iter%%4 + 1]], octaves(coalescence_run(size, 0.0021565))) # run simulation and sum up all abundance octave vectors
   }
-  timer <- as.character(proc.time()[3]-start)
-  combined_results <- lapply(results, function(i) i/25)
+  timer <- as.character(proc.time()[3]-start) # stop timer
+  combined_results <- lapply(results, function(i) i/25) # take average 
   
   # clear any existing graphs and plot your graph within the R window
   combined_results <- lapply(1:4, function(i) c(combined_results[[i]], rep(0, length(combined_results[[4]]) - length(combined_results[[i]]) )))
@@ -601,7 +600,7 @@ Challenge_D <- function() {
       args.legend=list(title="Community Size", horiz = T) # add title to legend and make legend horizontal
     )
 
-  answer <- "The coalescence model is more stochastic since it does not average out the species abundance for a community over generations. This is why the results are different from that of the cluster run. However, coalescence is faster because it only follows the ancestry of the individuals found in the stable community, where sharing ancestry implies individuals are of the same species. Many lineages/species are lost in the history of the communtiy, and by ignoring the ones that have gone exitinct, less simulations need to be carried out. Also, coalescence does not require a burn-in period."
+  answer <- "The coalescence model is more stochastic since it does not average out the species abundance for a community over generations. This is why the results are different from that of the cluster run. If more simulations are run, the graph will come to resemble more closely that from the cluster run. However, coalescence is faster because it only follows the ancestry of the individuals found in the stable community, where sharing ancestry implies individuals are of the same species. Many lineages/species are lost in the history of the communtiy, and by ignoring the ones that have gone exitinct, less simulations need to be carried out. Also, coalescence does not require a burn-in period."
   return(paste("The coalescence simulation took ", timer, " seconds to run 100 simulations in sequence. ", answer, sep = "" ))
 }
 
